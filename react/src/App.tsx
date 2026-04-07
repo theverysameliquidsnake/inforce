@@ -31,7 +31,7 @@ function App() {
 		}
 
 		try {
-			const response = await axios.get<Response>('http://localhost:8000/event', { params: params });
+			const response = await axios.get<Response>(`${import.meta.env.VITE_API_URL}/event`, { params: params })
 
 			if ('error' in response.data) {
 				console.error(response.data.error);
