@@ -35,21 +35,46 @@ podman network create inforce
 ```
 3. Run PostgrSQL container and create tables
 ```zsh
-podman run --name postgres --network inforce -e POSTGRES_USER=user -e POSTGRES_PASSWORD=pass -e POSTGRES_DB=inforce -p 5432:5432 postgres:latest
+podman run --name postgres \
+    --network inforce \
+    -e POSTGRES_USER=user \
+    -e POSTGRES_PASSWORD=pass \
+    -e POSTGRES_DB=inforce \
+    -p 5432:5432
+    postgres:latest
 ```
 ```sql
-CREATE TABLE user_events (id SERIAL PRIMARY KEY, user_id INT NOT NULL, action TEXT NOT NULL, timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(), metadata JSONB);
-CREATE TABLE user_event_summaries (id SERIAL PRIMARY KEY, user_id INT NOT NULL, events INT NOT NULL, start_time TIMESTAMP NOT NULL);
+CREATE TABLE user_events (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    action TEXT NOT NULL,
+    timestamp TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    metadata JSONB
+);
+CREATE TABLE user_event_summaries (
+    id SERIAL PRIMARY KEY,
+    user_id INT NOT NULL,
+    events INT NOT NULL,
+    start_time TIMESTAMP NOT NULL
+);
 ```
 4. Build and run Go
 ```zsh
 podman build -t go-api ./go
-podman run --name go-api --network inforce -e POSTGRES_URL=postgres://user:pass@postgres:5432/inforce -e REACT_URL=http://localhost:5173 -p 8000:8000 go-api:latest
+podman run --name go-api \
+    --network inforce \
+    -e POSTGRES_URL=postgres://user:pass@postgres:5432/inforce \
+    -e REACT_URL=http://localhost:5173 \
+    -p 8000:8000 \
+    go-api:latest
 ```
 5. Build and run React
 ```zsh
 podman build -t react ./react
-podman run --name react -e VITE_API_URL=http://localhost:8000 -p 5173:5173 react
+podman run --name react \
+    -e VITE_API_URL=http://localhost:8000 \
+    -p 5173:5173 \
+    react
 ```
 
 ## Use
