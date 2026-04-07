@@ -1,0 +1,23 @@
+.app {
+	padding: 20px;
+}
+
+.filters {
+ 	margin-bottom: 20px;
+}
+
+.filters input {
+	margin-right: 10px;
+	padding: 6px;
+	font-size: 14px;
+}
+
+.filters button {
+	padding: 6px 12px;
+  	font-size: 14px;
+}
+
+.events {
+  	width: 100%;
+  	font-size: 14px;
+}

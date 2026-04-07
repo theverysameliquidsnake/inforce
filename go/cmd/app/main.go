@@ -4,6 +4,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"github.com/theverysameliquidsnake/inforce/internal/database"
@@ -33,6 +34,10 @@ func main() {
 	go job.StartAggregationBackgroundJob(context.Background(), summaryService)
 
 	router := gin.Default()
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{"http://localhost:5173"},
+		AllowMethods: []string{"GET", "POST"},
+	}))
 
 	eventHandler.RegisterEventRoutes(router)
 
