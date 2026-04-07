@@ -74,7 +74,7 @@ podman build -t react ./react
 podman run --name react \
     -e VITE_API_URL=http://localhost:8000 \
     -p 5173:5173 \
-    react
+    react:latest
 ```
 
 ## Use
