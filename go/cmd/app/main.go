@@ -13,6 +13,7 @@ import (
 	"github.com/theverysameliquidsnake/inforce/internal/job"
 	"github.com/theverysameliquidsnake/inforce/internal/repository"
 	"github.com/theverysameliquidsnake/inforce/internal/service"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
 )
 
 func init() {
@@ -40,9 +41,14 @@ func main() {
 		AllowMethods: []string{"GET", "POST"},
 	}))
 
+	prometheus := ginprometheus.NewWithConfig(ginprometheus.Config{
+		Subsystem: "gin",
+	})
+	prometheus.Use(router)
+
 	eventHandler.RegisterEventRoutes(router)
 
-	if err := router.Run(":8000"); err != nil {
+	if err := router.Run("0.0.0.0:8000"); err != nil {
 		log.Fatalf("failed to start router: %v", err)
 	}
 }
