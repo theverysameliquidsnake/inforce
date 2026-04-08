@@ -9,6 +9,7 @@ Backend:
 - cron
 - godotenv
 - cors
+- gin-prometheus
 
 Frontend:
 - React (Vite)
@@ -41,7 +42,7 @@ podman run --name postgres \
     -e POSTGRES_PASSWORD=pass \
     -e POSTGRES_DB=inforce \
     -p 5432:5432
-    postgres:latest
+    docker.io/postgres:latest
 ```
 ```sql
 CREATE TABLE user_events (
@@ -76,11 +77,26 @@ podman run --name react \
     -p 5173:5173 \
     react:latest
 ```
+6. Metrics
+```zsh
+podman run --name prometheus \
+    --network inforce \
+    -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml:Z \
+    -p 9090:9090
+    docker.io/prom/prometheus:latest
+podman run --name grafana \
+    --network inforce
+    -p 3000:3000
+    docker.io/grafana/grafana:latest
+```
+Navigate to `http://localhost:3000`, login with standard `admin` / `admin` credentials, add prometheus under Connections -> Data Sources with this url: `http://prometheus:9090`
 
 ## Use
 ### UI:
 
 Web UI for viewing and filtering events at http://localhost:5173
+
+Grafana at http://localhost:3000
 
 ### REST API:
 #### Create event
