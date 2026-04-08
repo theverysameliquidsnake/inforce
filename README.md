@@ -55,7 +55,7 @@ CREATE TABLE user_event_summaries (
     id SERIAL PRIMARY KEY,
     user_id INT NOT NULL,
     events INT NOT NULL,
-    start_time TIMESTAMPTZ datetime NOT NULL
+    start_time TIMESTAMPTZ NOT NULL
 );
 ```
 4. Build and run Go
