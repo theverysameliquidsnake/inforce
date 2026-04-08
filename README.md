@@ -82,11 +82,11 @@ podman run --name react \
 podman run --name prometheus \
     --network inforce \
     -v $(pwd)/prometheus.yml:/etc/prometheus/prometheus.yml:Z \
-    -p 9090:9090
+    -p 9090:9090 \
     docker.io/prom/prometheus:latest
 podman run --name grafana \
-    --network inforce
-    -p 3000:3000
+    --network inforce \
+    -p 3000:3000 \
     docker.io/grafana/grafana:latest
 ```
 Navigate to `http://localhost:3000`, login with standard `admin` / `admin` credentials, add prometheus under Connections -> Data Sources with this url: `http://prometheus:9090`
