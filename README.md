@@ -41,7 +41,7 @@ podman run --name postgres \
     -e POSTGRES_USER=user \
     -e POSTGRES_PASSWORD=pass \
     -e POSTGRES_DB=inforce \
-    -p 5432:5432
+    -p 5432:5432 \
     docker.io/postgres:latest
 ```
 ```sql
