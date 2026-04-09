@@ -1,4 +1,4 @@
-# Inforce
+# Simple API Example
 Simple full-stack web application built with React and Go, backed by PostgreSQL.
 
 ## Tech Used
